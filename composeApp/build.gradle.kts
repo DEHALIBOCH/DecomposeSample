@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -42,8 +41,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.decompose)
-            implementation(libs.decompose.jetbrains)
             implementation(libs.kotlinx.serialization.json)
+           implementation(libs.decompose.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
