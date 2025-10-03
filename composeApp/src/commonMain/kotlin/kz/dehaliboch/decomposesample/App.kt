@@ -24,7 +24,10 @@ fun App(root: RootComponent) {
         ) { child ->
             when (val instance = child.instance) {
                 is RootComponent.Child.ScreenA -> ScreenA(instance.component)
-                is RootComponent.Child.ScreenB -> ScreenB(instance.component)
+                is RootComponent.Child.ScreenB -> ScreenB(
+                    text = instance.component.text,
+                    component = instance.component
+                )
             }
         }
     }
