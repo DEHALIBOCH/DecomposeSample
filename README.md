@@ -5,7 +5,7 @@ The goal is to learn how navigation, component lifecycle, and state management w
 
 ---
 
-## 🔗 Resources
+## Resources:
 - Repo: [github.com/arkivanov/Decompose](https://github.com/arkivanov/Decompose)  
 - Docs: [arkivanov.github.io/Decompose](https://arkivanov.github.io/Decompose/)
 
