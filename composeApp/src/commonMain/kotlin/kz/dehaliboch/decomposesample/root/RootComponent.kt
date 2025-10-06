@@ -5,6 +5,8 @@ import com.arkivanov.decompose.childContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 import kz.dehaliboch.decomposesample.Person
@@ -25,7 +27,29 @@ class RootComponent(
         initialConfiguration = Config.Persons
     )
 
-    private val persons = PersonsComponent(childContext(PersonsComponent.KEY))
+    private val persons = PersonsComponent(
+        componentContext = childContext(key = PersonsComponent.KEY),
+        onAddNewPersonClick = ::onAddNewPerson,
+        onPersonClick = ::onPersonClicked
+    )
+
+    private fun onPersonClicked(person: Person) {
+        navigation.pushNew(Config.Detail(person))
+    }
+
+    private fun onAddNewPerson() {
+        navigation.pushNew(Config.CreatePerson)
+    }
+
+    private fun onCreatePerson(person: Person) {
+        navigation.pop()
+        persons.updatePerson(person)
+
+//        val child = stack.value.active.instance
+//        if (child is Child.Persons) {
+//            child.component.updatePerson(person)
+//        }
+    }
 
     private fun createChild(
         config: Config,
@@ -33,7 +57,12 @@ class RootComponent(
     ): Child {
         return when (config) {
             Config.CreatePerson -> {
-                Child.CreatePerson(CreatePersonComponent(context))
+                Child.CreatePerson(
+                    CreatePersonComponent(
+                        componentContext = context,
+                        onFinish = ::onCreatePerson
+                    )
+                )
             }
 
             is Config.Detail -> {
@@ -41,7 +70,7 @@ class RootComponent(
             }
 
             Config.Persons -> {
-                Child.PersonsList(persons)
+                Child.Persons(persons)
             }
         }
     }
@@ -63,7 +92,7 @@ class RootComponent(
 
         class CreatePerson(val component: CreatePersonComponent) : Child
 
-        class PersonsList(val component: PersonsComponent) : Child
+        class Persons(val component: PersonsComponent) : Child
 
         class PersonDetails(val component: PersonDetailsComponent) : Child
     }

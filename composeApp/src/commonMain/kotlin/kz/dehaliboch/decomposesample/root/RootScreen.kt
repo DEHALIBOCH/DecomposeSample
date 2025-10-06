@@ -37,7 +37,7 @@ fun RootScreen(component: RootComponent) {
                 PersonDetailsScreen(instance.component)
             }
 
-            is RootComponent.Child.PersonsList -> {
+            is RootComponent.Child.Persons -> {
                 PersonsScreen(instance.component)
             }
         }
