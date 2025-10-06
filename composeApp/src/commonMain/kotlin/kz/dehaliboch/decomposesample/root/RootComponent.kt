@@ -2,8 +2,10 @@ package kz.dehaliboch.decomposesample.root
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.childContext
+import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 import kz.dehaliboch.decomposesample.Person
 import kz.dehaliboch.decomposesample.person.create.CreatePersonComponent
@@ -16,7 +18,7 @@ class RootComponent(
 
     private val navigation = StackNavigation<Config>()
 
-    val stack = childStack(
+    val stack: Value<ChildStack<Config, Child>> = childStack(
         source = navigation,
         serializer = Config.serializer(),
         childFactory = ::createChild,
