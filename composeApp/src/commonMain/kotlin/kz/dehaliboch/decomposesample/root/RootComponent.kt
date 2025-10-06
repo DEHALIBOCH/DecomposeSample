@@ -37,7 +37,7 @@ class RootComponent(
             }
 
             is Config.Detail -> {
-                Child.DetailPerson(PersonDetailsComponent(context))
+                Child.PersonDetails(PersonDetailsComponent(context))
             }
 
             Config.Persons -> {
@@ -65,6 +65,6 @@ class RootComponent(
 
         class PersonsList(val component: PersonsComponent) : Child
 
-        class DetailPerson(val component: PersonDetailsComponent) : Child
+        class PersonDetails(val component: PersonDetailsComponent) : Child
     }
 }
