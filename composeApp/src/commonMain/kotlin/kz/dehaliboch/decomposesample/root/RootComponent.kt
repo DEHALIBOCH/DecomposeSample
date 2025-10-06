@@ -9,7 +9,7 @@ import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 import kz.dehaliboch.decomposesample.Person
 import kz.dehaliboch.decomposesample.person.create.CreatePersonComponent
-import kz.dehaliboch.decomposesample.person.detail.DetailPersonComponent
+import kz.dehaliboch.decomposesample.person.detail.PersonDetailsComponent
 import kz.dehaliboch.decomposesample.person.list.PersonsComponent
 
 class RootComponent(
@@ -37,7 +37,7 @@ class RootComponent(
             }
 
             is Config.Detail -> {
-                Child.DetailPerson(DetailPersonComponent(context))
+                Child.DetailPerson(PersonDetailsComponent(context))
             }
 
             Config.Persons -> {
@@ -65,6 +65,6 @@ class RootComponent(
 
         class PersonsList(val component: PersonsComponent) : Child
 
-        class DetailPerson(val component: DetailPersonComponent) : Child
+        class DetailPerson(val component: PersonDetailsComponent) : Child
     }
 }
