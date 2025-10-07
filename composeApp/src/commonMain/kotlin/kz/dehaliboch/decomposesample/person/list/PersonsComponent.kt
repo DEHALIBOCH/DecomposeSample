@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kz.dehaliboch.decomposesample.Person
 
 class PersonsComponent(
@@ -20,7 +21,9 @@ class PersonsComponent(
     }
 
     fun updatePerson(person: Person) {
-
+        _state.update {
+            it.copy(it.items + person)
+        }
     }
 
     fun addNewPersonClick() {
@@ -28,7 +31,9 @@ class PersonsComponent(
     }
 
     fun deletePerson(person: Person) {
-
+        _state.update {
+            it.copy(it.items - person)
+        }
     }
 
     data class State(

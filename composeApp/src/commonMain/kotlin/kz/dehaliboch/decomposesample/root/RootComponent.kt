@@ -18,6 +18,12 @@ class RootComponent(
     componentContext: ComponentContext
 ) : ComponentContext by componentContext {
 
+    private val persons = PersonsComponent(
+        componentContext = childContext(key = PersonsComponent.KEY),
+        onAddNewPersonClick = ::onAddNewPerson,
+        onPersonClick = ::onPersonClicked
+    )
+
     private val navigation = StackNavigation<Config>()
 
     val stack: Value<ChildStack<Config, Child>> = childStack(
@@ -25,12 +31,6 @@ class RootComponent(
         serializer = Config.serializer(),
         childFactory = ::createChild,
         initialConfiguration = Config.Persons
-    )
-
-    private val persons = PersonsComponent(
-        componentContext = childContext(key = PersonsComponent.KEY),
-        onAddNewPersonClick = ::onAddNewPerson,
-        onPersonClick = ::onPersonClicked
     )
 
     private fun onPersonClicked(person: Person) {
@@ -66,7 +66,12 @@ class RootComponent(
             }
 
             is Config.Detail -> {
-                Child.PersonDetails(PersonDetailsComponent(context))
+                Child.PersonDetails(
+                    PersonDetailsComponent(
+                        componentContext = context,
+                        person = config.person
+                    )
+                )
             }
 
             Config.Persons -> {
