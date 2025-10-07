@@ -5,8 +5,10 @@ import com.arkivanov.decompose.router.slot.SlotNavigation
 import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
+import com.arkivanov.essenty.instancekeeper.getOrCreate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.serialization.Serializable
+import kz.dehaliboch.decomposesample.Counter
 import kz.dehaliboch.decomposesample.Person
 
 class PersonDetailsComponent(
@@ -14,6 +16,10 @@ class PersonDetailsComponent(
     val person: Person,
     private val onDelete: (Person) -> Unit = {},
 ) : ComponentContext by componentContext {
+
+//    private val counter = Counter()
+    private val counter = instanceKeeper.getOrCreate { Counter() }
+    val counterState = counter.countFlow
 
     val state = MutableStateFlow(State(title = person.toString()))
 
@@ -24,7 +30,9 @@ class PersonDetailsComponent(
         childFactory = ::createChildSlots,
     )
 
-    fun createChildSlots(config: Config, componentContext: ComponentContext) = when(config) {
+    fun clickOnPerson() = counter.increment()
+
+    fun createChildSlots(config: Config, componentContext: ComponentContext) = when (config) {
         Config.Delete -> Child.Delete
     }
 
