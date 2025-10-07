@@ -63,7 +63,8 @@ private fun CreatePersonScreenPreview() {
     CreatePersonScreen(
         component = CreatePersonComponent(
             componentContext = defaultPreviewComponentContext(),
-            onFinish = { }
+            onDismiss = {},
+            onFinish = { },
         )
     )
 }

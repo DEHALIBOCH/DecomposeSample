@@ -30,7 +30,8 @@ class RootComponent(
         source = navigation,
         serializer = Config.serializer(),
         childFactory = ::createChild,
-        initialConfiguration = Config.Persons
+        initialConfiguration = Config.Persons,
+        handleBackButton = true,
     )
 
     private fun onPersonClicked(person: Person) {
@@ -51,6 +52,15 @@ class RootComponent(
 //        }
     }
 
+    private fun onDismissCreatePersonScreen() {
+        navigation.pop()
+    }
+
+    private fun onDeletePerson(person: Person) {
+        navigation.pop()
+        persons.deletePerson(person)
+    }
+
     private fun createChild(
         config: Config,
         context: ComponentContext
@@ -60,7 +70,8 @@ class RootComponent(
                 Child.CreatePerson(
                     CreatePersonComponent(
                         componentContext = context,
-                        onFinish = ::onCreatePerson
+                        onDismiss = ::onDismissCreatePersonScreen,
+                        onFinish = ::onCreatePerson,
                     )
                 )
             }
@@ -69,7 +80,8 @@ class RootComponent(
                 Child.PersonDetails(
                     PersonDetailsComponent(
                         componentContext = context,
-                        person = config.person
+                        person = config.person,
+                        onDelete = ::onDeletePerson
                     )
                 )
             }
